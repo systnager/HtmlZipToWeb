@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main">Main</string>
+    <string name="map">Map</string>
+    <string name="action_settings">Settings</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="empty_list">List is empty</string>
+    <string name="choose_zip">Choose zip file</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="folder_renamed">Folder renamed</string>
+    <string name="folder_deleted">Folder deleted</string>
+    <string name="folder_already_exists">Folder already exists</string>
+    <string name="permission_granted">Permission granted</string>
+    <string name="please_wait">Please wait</string>
+    <string name="archive_unpacked">Archive unpacked</string>
+    <string name="unpacking_archive">Unpacking the archive</string>
+    <string name="access_folder_error">A technical error occurred. The last map you opened may have been renamed or deleted</string>
+    <string name="no_recently_opened_map">No recently opened map</string>
+    <string name="access_requeired">Permission is required. Application operation is not guaranteed</string>
+    <string name="access_to_filesystem">Permission to access the file system</string>
+    <string name="access_permission_required_warning">The application requires access to the file system to save and open files. Click \'OK\' to grant permission.</string>
+    <string name="incorrect_folder_name">Invalid name. Remove special characters, spaces, and limit the length to 255 characters</string>
+    <string name="enter_folder_name">Enter the name in Latin without spaces and special characters</string>
+    <string name="could_not_renamed_folder">Failed to delete folder</string>
+    <string name="latest_map">Latest map</string>
+    <string name="downloaded_file_saved">File successful downloaded to Download folder</string>
+    <string name="file_exist">File already exist</string>
+    <string name="more_info">For more information, go to the app repository</string>
+</resources>
