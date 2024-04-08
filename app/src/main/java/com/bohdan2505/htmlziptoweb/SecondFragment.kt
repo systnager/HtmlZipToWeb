@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.GeolocationPermissions
+import android.webkit.JavascriptInterface
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -32,6 +33,8 @@ class SecondFragment : Fragment() {
     private lateinit var currentPhotoUri: Uri
     private lateinit var contentResolver: ContentResolver
     private val FILE_CHOOSER_REQUEST_CODE = 132
+    private val FILE_WRITE_REQUEST_CODE = 1001
+    private lateinit var layoutJSON: String
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
@@ -64,6 +67,7 @@ class SecondFragment : Fragment() {
         webSettings.allowFileAccess = true
         mapWebView.settings.databaseEnabled = true
         mapWebView.settings.domStorageEnabled = true
+        mapWebView.addJavascriptInterface(this, "This")
         webSettings.setGeolocationEnabled(true)
         webSettings.setGeolocationDatabasePath(context?.filesDir?.path)
         mapWebView.webChromeClient = object : WebChromeClient() {
@@ -115,6 +119,17 @@ class SecondFragment : Fragment() {
             fileUploadCallback?.onReceiveValue(results)
             fileUploadCallback = null
         }
+
+        if (requestCode == FILE_WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            data?.data?.let { uri ->
+                context?.contentResolver?.openFileDescriptor(uri, "w")?.use { parcelFileDescriptor ->
+                    FileOutputStream(parcelFileDescriptor.fileDescriptor).use { fileOutputStream ->
+                        fileOutputStream.write(layoutJSON.toByteArray())
+                        fileOutputStream.close()
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -128,12 +143,14 @@ class SecondFragment : Fragment() {
         super.onResume()
     }
 
-    private fun saveTextToFile(uri: Uri, text: String) {
-        contentResolver.openFileDescriptor(uri, "w")?.use { parcelFileDescriptor ->
-            val fileOutputStream = FileOutputStream(parcelFileDescriptor.fileDescriptor)
-            fileOutputStream.write(text.toByteArray())
-            fileOutputStream.close()
-        }
+    @JavascriptInterface
+    fun requestDirectory(fileName: String, fileContent: String) {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "*/*"
+        intent.putExtra(Intent.EXTRA_TITLE, fileName)
+        layoutJSON = fileContent
+        startActivityForResult(intent, FILE_WRITE_REQUEST_CODE)
     }
 }
 
