@@ -67,7 +67,7 @@ class SecondFragment : Fragment() {
         webSettings.allowFileAccess = true
         mapWebView.settings.databaseEnabled = true
         mapWebView.settings.domStorageEnabled = true
-        mapWebView.addJavascriptInterface(this, "This")
+        mapWebView.addJavascriptInterface(this, "IntegratedWebJSInterface")
         webSettings.setGeolocationEnabled(true)
         webSettings.setGeolocationDatabasePath(context?.filesDir?.path)
         mapWebView.webChromeClient = object : WebChromeClient() {
@@ -143,6 +143,7 @@ class SecondFragment : Fragment() {
         super.onResume()
     }
 
+    //JavaScriptMethod for save text file to user filesystem without access to filesystem
     @JavascriptInterface
     fun requestDirectory(fileName: String, fileContent: String) {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
