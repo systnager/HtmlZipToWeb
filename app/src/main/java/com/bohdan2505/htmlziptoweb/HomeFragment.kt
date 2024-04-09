@@ -86,7 +86,6 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewLifecycleOwner.lifecycleScope.launch {
-            checkAndRequestStoragePermission()
         }
 
         super.onViewCreated(view, savedInstanceState)
@@ -131,35 +130,6 @@ class HomeFragment : Fragment() {
             val url = "https://github.com/systnager/WebMap/"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
-        }
-    }
-
-    private fun checkAndRequestStoragePermission() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R){
-            if ((ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED).not()) {
-                requestPermissions(
-                    arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    REQUEST_PERMISSION_CODE
-                )
-            }
-        }
-    }
-
-
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == REQUEST_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Snackbar.make(binding.root, resources.getString(R.string.permission_granted), Snackbar.LENGTH_LONG).show()
-            } else {
-                Snackbar.make(binding.root, resources.getString(R.string.access_requeired), Snackbar.LENGTH_LONG).show()
-            }
         }
     }
 
