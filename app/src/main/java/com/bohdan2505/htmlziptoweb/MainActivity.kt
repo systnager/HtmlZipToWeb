@@ -11,7 +11,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.fragment.findNavController
 import com.bohdan2505.htmlziptoweb.databinding.ActivityMainBinding
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,7 +58,19 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                true
+            }
+            R.id.action_help -> {
+                val bundle = Bundle()
+                bundle.putString("html_path", "android_asset/main.html")
+
+                val destinationFragment = SecondFragment()
+                destinationFragment.arguments = bundle
+
+                findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -28,4 +28,5 @@
     <string name="downloaded_file_saved">Файл успішно збережено до папки завантажень</string>
     <string name="file_exist">Файл вже існує</string>
     <string name="more_info">Більше інформації в репозитарії застосунку</string>
+    <string name="action_help">Допомога</string>
 </resources>
